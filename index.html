@@ -8,7 +8,7 @@
   <script>
     var provider = new ethers.providers.Web3Provider(web3.currentProvider,'ropsten');
 
-    var BettingContractAddress = "0xd81787048A36AE542791A4EEd16508c904b4895a";
+    var BettingContractAddress = "0x23F000E6150d4C2C00c5125584079397786F8141";
     var BettingContractABI = [{"constant":false,"inputs":[{"name":"matchId","type":"bytes32"},{"name":"_for","type":"bool"}],"name":"bet","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[{"name":"witness","type":"bytes32"},{"name":"graderQuorum","type":"uint256"},{"name":"graders","type":"address[]"},{"name":"finalPrice","type":"uint8"},{"name":"sigs","type":"bytes32[3][]"}],"name":"claim","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"graderQuorum","type":"uint256"},{"name":"graders","type":"address[]"},{"name":"detailsHash","type":"bytes32"},{"name":"recoveryTime","type":"uint256"},{"name":"cancelPrice","type":"uint8"}],"name":"recoverFunds","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"bytes32"}],"name":"bets","outputs":[{"name":"totalAmount","type":"uint256"},{"name":"finalized","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"}]
     var BettingContract;
 
@@ -19,15 +19,23 @@
 
   </script>
   <h1> Stackathon App </h1>
+
+
   <label> Balance </label>
     <br>
   <input type="text"> match ID </input>
 
-  <h3> will we win the hackathon? </h3>
-  <input type="number"> amount </input>
-  <input type="radio>"> Yes/No</input>
-  <br>
+
+
+    <h3> will we win the hackathon? </h3>
+  <input type="radio" name="winORnot" value="yes"> Yes<br>
+  <input type="radio" name="winORnot" value="no"> No<br>
+  <input type="number" id ="amount"> amount </input> <br>
   <button onclick="bet()"> bet </button>
+
+
+
+  <br>
 <br>
 
   <button onclick="claim()"> claim <button>
@@ -35,8 +43,10 @@
 
 <script>
   async function bet(){
+    let _for = document.querySelector('input[name=winORnot]:checked').value === 'yes';
+    console.log(_for)
+
     let matchId = '0xbff4f73a4fe0d8e7b75b7c6adc0dbf06b3b191fa3e6f26f2a06841636912c3d5';
-    let _for = true;
     let overrides = {
     value: ethers.utils.parseEther('0.01'),
 }

@@ -8,22 +8,26 @@
   <script>
     var provider = new ethers.providers.Web3Provider(web3.currentProvider,'ropsten');
 
-    var BettingContractAddress = "0x23F000E6150d4C2C00c5125584079397786F8141";
+    var BettingContractAddress = "0x01c906ee3356d4a66bf4ccb01e4bb39aba04bbb8";
     var BettingContractABI = [{"constant":false,"inputs":[{"name":"matchId","type":"bytes32"},{"name":"_for","type":"bool"}],"name":"bet","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[{"name":"witness","type":"bytes32"},{"name":"graderQuorum","type":"uint256"},{"name":"graders","type":"address[]"},{"name":"finalPrice","type":"uint8"},{"name":"sigs","type":"bytes32[3][]"}],"name":"claim","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"graderQuorum","type":"uint256"},{"name":"graders","type":"address[]"},{"name":"detailsHash","type":"bytes32"},{"name":"recoveryTime","type":"uint256"},{"name":"cancelPrice","type":"uint8"}],"name":"recoverFunds","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"bytes32"}],"name":"bets","outputs":[{"name":"totalAmount","type":"uint256"},{"name":"finalized","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"}]
     var BettingContract;
 
       provider.listAccounts().then(function(accounts) {
           signer = provider.getSigner(accounts[0]);
           BettingContract = new ethers.Contract(BettingContractAddress, BettingContractABI, signer);
+          signer.getBalance().then(function(result){
+            document.getElementById("balance").innerHTML = "Your ETH balance: " + result/10**18
+
+          })
         })
 
   </script>
   <h1> Stackathon App </h1>
 
 
-  <label> Balance </label>
+  <label id="balance">  </label>
     <br>
-  <input type="text"> match ID </input>
+
 
 
 

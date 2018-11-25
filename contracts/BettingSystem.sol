@@ -3,11 +3,19 @@ pragma experimental ABIEncoderV2;
 
 
 contract BettingSystem {
-    mapping(bytes32 => mapping(address => uint)) positions;
-    mapping(bytes32 => bool) claimed;
+    struct Bet{
+        mapping(address => int) positions;
+        address[] bettorList;
+        uint totalAmount;
+    }
 
-    function bet(bytes32 matchId) payable public {
-        positions[matchId][msg.sender] = msg.value;
+    mapping(bytes32 => Bet) bets;
+
+
+    function bet(bytes32 matchId, bool _for) payable public {
+        bets[matchId].positions[msg.sender] = int(_for ? msg.value : -msg.value);
+        bets[matchId].bettorList.push(msg.sender);
+        bets[matchId].totalAmount += msg.value;
     }
 
     function claim(bytes32 witness, uint256 graderQuorum, address[] memory graders, uint8 finalPrice, bytes32[][3] memory sigs) public {
@@ -29,8 +37,8 @@ contract BettingSystem {
 
         require(validated >= graderQuorum, "insufficient graders for quorum");
 
-        uint toWithdraw = positions[matchId][msg.sender];
-        positions[matchId][msg.sender] = 0;
+        uint toWithdraw = bets[matchId].totalAmount/bets[matchId].bettorList.length;
+        bets[matchId].positions[msg.sender] = 0;
         msg.sender.transfer(toWithdraw);
     }
 

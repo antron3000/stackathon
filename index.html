@@ -8,7 +8,7 @@
   <script>
     var provider = new ethers.providers.Web3Provider(web3.currentProvider,'ropsten');
 
-    var BettingContractAddress = "0x01c906ee3356d4a66bf4ccb01e4bb39aba04bbb8";
+    var BettingContractAddress = "0x1772c974f6413ecbeb2ce41a8a07502a3e49e966";
     var BettingContractABI = [{"constant":false,"inputs":[{"name":"matchId","type":"bytes32"},{"name":"_for","type":"bool"}],"name":"bet","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[{"name":"witness","type":"bytes32"},{"name":"graderQuorum","type":"uint256"},{"name":"graders","type":"address[]"},{"name":"finalPrice","type":"uint8"},{"name":"sigs","type":"bytes32[3][]"}],"name":"claim","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"graderQuorum","type":"uint256"},{"name":"graders","type":"address[]"},{"name":"detailsHash","type":"bytes32"},{"name":"recoveryTime","type":"uint256"},{"name":"cancelPrice","type":"uint8"}],"name":"recoverFunds","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"bytes32"}],"name":"bets","outputs":[{"name":"totalAmount","type":"uint256"},{"name":"finalized","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"}]
     var BettingContract;
 
@@ -34,7 +34,8 @@
     <h3> will we win the hackathon? </h3>
   <input type="radio" name="winORnot" value="yes"> Yes<br>
   <input type="radio" name="winORnot" value="no"> No<br>
-  <input type="number" id ="amount"> amount </input> <br>
+
+  <input type="number" id ="amount" step="0.001"> amount (in eth) </input> <br>
   <button onclick="bet()"> bet </button>
 
 
@@ -49,10 +50,11 @@
   async function bet(){
     let _for = document.querySelector('input[name=winORnot]:checked').value === 'yes';
     console.log(_for)
-
+    let _amount = document.getElementById("amount").value;
     let matchId = '0xbff4f73a4fe0d8e7b75b7c6adc0dbf06b3b191fa3e6f26f2a06841636912c3d5';
+
     let overrides = {
-    value: ethers.utils.parseEther('0.01'),
+    value: ethers.utils.parseEther(_amount.toString())
 }
 
     await BettingContract.bet(matchId,_for,overrides);

@@ -3,14 +3,14 @@ pragma experimental ABIEncoderV2;
 
 
 contract BettingSystem {
-    struct Bet {
+    struct Match {
         mapping(address => int) positions;
         address[] bettorList;
         uint totalAmount;
         bool finalized;
     }
 
-    mapping(bytes32 => Bet) bets;
+    mapping(bytes32 => Match) bets;
 
 
     function bet(bytes32 matchId, bool _for) payable public {

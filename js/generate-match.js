@@ -25,7 +25,7 @@ let input = {
   cancelPrice: 50,
   recoveryTime: 1543207976,
   graderQuorum: 2,
-  graders: ['0x4176350697d42bc937616ce18001f50c8a751b54', '0x01a346af3a7217957546d772d2fa20ece9880b3b', '0xe6ec4579be32f1f6a22a22a58fdf063677b13d98'],
+  graders: ['4176350697d42bc937616ce18001f50c8a751b54', '01a346af3a7217957546d772d2fa20ece9880b3b', 'e6ec4579be32f1f6a22a22a58fdf063677b13d98'],
   details: {
     sport: 'nfl',
     team1: 'Buffalo Bills',

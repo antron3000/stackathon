@@ -1,7 +1,6 @@
 pragma solidity ^0.5.0;
 pragma experimental ABIEncoderV2;
 
-
 contract BettingSystem {
     struct Match {
         mapping(address => int) positions;

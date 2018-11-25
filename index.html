@@ -8,8 +8,8 @@
   <script>
     var provider = new ethers.providers.Web3Provider(web3.currentProvider,'ropsten');
 
-    var BettingContractAddress = "0x60e0a0Af93Cdb849631d271705B497E6F8E13a78";
-    var BettingContractABI = [{"constant":false,"inputs":[{"name":"matchId","type":"bytes32"},{"name":"_for","type":"bool"}],"name":"bet","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[{"name":"witness","type":"bytes32"},{"name":"graderQuorum","type":"uint256"},{"name":"graders","type":"address[]"},{"name":"finalPrice","type":"uint8"},{"name":"sigs","type":"bytes32[][]"}],"name":"claim","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"graderQuorum","type":"uint256"},{"name":"graders","type":"address[]"},{"name":"detailsHash","type":"bytes32"},{"name":"recoveryTime","type":"uint256"},{"name":"cancelPrice","type":"uint8"}],"name":"recoverFunds","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}]
+    var BettingContractAddress = "0xd81787048A36AE542791A4EEd16508c904b4895a";
+    var BettingContractABI = [{"constant":false,"inputs":[{"name":"matchId","type":"bytes32"},{"name":"_for","type":"bool"}],"name":"bet","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":false,"inputs":[{"name":"witness","type":"bytes32"},{"name":"graderQuorum","type":"uint256"},{"name":"graders","type":"address[]"},{"name":"finalPrice","type":"uint8"},{"name":"sigs","type":"bytes32[3][]"}],"name":"claim","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"graderQuorum","type":"uint256"},{"name":"graders","type":"address[]"},{"name":"detailsHash","type":"bytes32"},{"name":"recoveryTime","type":"uint256"},{"name":"cancelPrice","type":"uint8"}],"name":"recoverFunds","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"bytes32"}],"name":"bets","outputs":[{"name":"totalAmount","type":"uint256"},{"name":"finalized","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"}]
     var BettingContract;
 
       provider.listAccounts().then(function(accounts) {
@@ -17,7 +17,7 @@
           BettingContract = new ethers.Contract(BettingContractAddress, BettingContractABI, signer);
         })
 
-  </script
+  </script>
   <h1> Stackathon App </h1>
   <label> Balance </label>
     <br>
@@ -35,23 +35,27 @@
 
 <script>
   async function bet(){
-    let matchId;
-    let _for;
-    await BettingContract.bet(matchId,_for);
+    let matchId = '0xbff4f73a4fe0d8e7b75b7c6adc0dbf06b3b191fa3e6f26f2a06841636912c3d5';
+    let _for = true;
+    let overrides = {
+    value: ethers.utils.parseEther('0.01'),
+}
+
+    await BettingContract.bet(matchId,_for,overrides);
   }
 
   async function claim(){
-      let witness
-      let graderQuorum
-      let graders
-      let finalPrice
-      let sigs
+      let witness = "0xac6349cadc1d26022729135f6e2e0d6486ad76a3ffcf219df65a6d8c9d41a117"
+      let graderQuorum = 2
+      let graders = ["0x4176350697d42bc937616ce18001f50c8a751b54", "0x01a346af3a7217957546d772d2fa20ece9880b3b", "0xe6ec4579be32f1f6a22a22a58fdf063677b13d98"]
+      let finalPrice = 0
+      let sigs =
+      [["0x78c26eafcdf1106a9a77352e92d82790128239eee71a5b5aa5585ec52ec6def6","0x21f76375ff700bed287e304d5606c20c32889aea9573259b723f828626682414","0x000000000000000000000000000000000000000000000000000000000000001b"],
+      ["0xffa192c01952dcbf032e094acaa1ad7c9375d5a4f78b6ebb5c9e359da21a8278","0x11843d922ab134563551933bb157939db308ed4800ff04f2b78e16fc0ddb6e32","0x000000000000000000000000000000000000000000000000000000000000001c"],
+      ["0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000"]]
+
       await BettingContract.claim(witness,graderQuorum, graders, finalPrice,sigs);
   }
 </script>
-
-
-
-
 </body>
 </html>

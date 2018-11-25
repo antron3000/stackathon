@@ -3,10 +3,11 @@ pragma experimental ABIEncoderV2;
 
 
 contract BettingSystem {
-    struct Bet{
+    struct Bet {
         mapping(address => int) positions;
         address[] bettorList;
         uint totalAmount;
+        bool finalized;
     }
 
     mapping(bytes32 => Bet) bets;
@@ -22,7 +23,7 @@ contract BettingSystem {
         require(finalPrice <= 100);
 
         bytes32 matchId = keccak256(abi.encodePacked(witness, graderQuorum, graders));
-        bytes32 messageHash = keccak256(abi.encodePacked(this, matchId, finalPrice));
+        bytes32 messageHash = keccak256(abi.encodePacked(matchId, finalPrice)); // FIXME: should use contract addr to prevent replay attacks
         bytes32 messageHash2 = keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n32", messageHash));
 
         uint256 validated = 0;
@@ -42,6 +43,13 @@ contract BettingSystem {
         msg.sender.transfer(toWithdraw);
     }
 
-    //function recoverFunds(bytes32 witness, uint256 graderQuorum, address[] memory graders, bytes32 detailsHash, uint recoveryTime, uint8 cancelPrice) public {
-    //}
+    function recoverFunds(uint256 graderQuorum, address[] memory graders, bytes32 detailsHash, uint recoveryTime, uint8 cancelPrice) public {
+        bytes32 witness = keccak256(abi.encodePacked(detailsHash, recoveryTime, cancelPrice));
+        bytes32 matchId = keccak256(abi.encodePacked(witness, graderQuorum, graders));
+
+        require(recoveryTime < block.timestamp);
+
+        // finalize matchId at cancelPrice
+        bets[matchId].finalized = true;
+    }
 }

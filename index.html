@@ -25,25 +25,34 @@
   <h1> Stackathon App </h1>
 
 
-  <label id="balance">  </label>
-    <br>
+  <label id="balance"></label>
 
 
-
+  <fieldset>
+    <legend>Place Bet</legend>
 
     <h3> will we win the hackathon? </h3>
-  <input type="radio" name="winORnot" value="yes"> Yes<br>
-  <input type="radio" name="winORnot" value="no"> No<br>
+    <input type="radio" name="winORnot" value="yes"> Yes<br>
+    <input type="radio" name="winORnot" value="no"> No<br>
 
-  <input type="number" id ="amount" step="0.001"> amount (in eth) </input> <br>
-  <button onclick="bet()"> bet </button>
+    <input type="number" id ="amount" step="0.001"> amount (in eth) </input> <br>
+    <button onclick="bet()"> bet </button>
 
+  </fieldset>
 
 
   <br>
-<br>
 
-  <button onclick="claim()"> claim <button>
+  <fieldset>
+    <legend>Claim Winnings</legend>
+
+    <div>
+      <label id="balance">Oracle result</label><br>
+      <textarea id="oracle" style="width: 600px"></textarea>
+    </div>
+
+    <button onclick="claim()"> claim
+  </fieldset>
 <br>
 
 <script>
@@ -61,16 +70,14 @@
   }
 
   async function claim(){
+      let oracleInfoJson = document.getElementById('oracle').value;
+      let oracleInfo = JSON.parse(oracleInfoJson);
+
       let witness = "0xac6349cadc1d26022729135f6e2e0d6486ad76a3ffcf219df65a6d8c9d41a117"
       let graderQuorum = 2
       let graders = ["0x4176350697d42bc937616ce18001f50c8a751b54", "0x01a346af3a7217957546d772d2fa20ece9880b3b", "0xe6ec4579be32f1f6a22a22a58fdf063677b13d98"]
-      let finalPrice = 0
-      let sigs =
-      [["0x78c26eafcdf1106a9a77352e92d82790128239eee71a5b5aa5585ec52ec6def6","0x21f76375ff700bed287e304d5606c20c32889aea9573259b723f828626682414","0x000000000000000000000000000000000000000000000000000000000000001b"],
-      ["0xffa192c01952dcbf032e094acaa1ad7c9375d5a4f78b6ebb5c9e359da21a8278","0x11843d922ab134563551933bb157939db308ed4800ff04f2b78e16fc0ddb6e32","0x000000000000000000000000000000000000000000000000000000000000001c"],
-      ["0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000000000000000000000000000"]]
 
-      await BettingContract.claim(witness,graderQuorum, graders, finalPrice,sigs);
+      await BettingContract.claim(witness,graderQuorum, graders, oracleInfo.finalPrice, oracleInfo.sigs);
   }
 </script>
 </body>

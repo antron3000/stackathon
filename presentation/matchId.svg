@@ -11,8 +11,8 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="164.32826mm"
-   height="66.265556mm"
-   viewBox="0 0 164.32826 66.265556"
+   height="73.258118mm"
+   viewBox="0 0 164.32826 73.258117"
    version="1.1"
    id="svg8"
    sodipodi:docname="matchId.svg"
@@ -186,9 +186,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="-59.125009"
-     inkscape:cy="131.02795"
+     inkscape:zoom="1.4"
+     inkscape:cx="154.83253"
+     inkscape:cy="159.74858"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -210,7 +210,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -432,8 +432,8 @@
     <rect
        style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.39169392;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect4518-3-2-0-0"
-       width="157.71928"
-       height="9.0371056"
+       width="161.31006"
+       height="16.029671"
        x="41.419312"
        y="94.474686"
        rx="0.74337244" />
@@ -447,6 +447,11 @@
          id="tspan4624-1-0-6-6-1"
          x="44.070271"
          y="100.26517"
-         style="stroke-width:0.11009839">keccak( {&quot;graderQuorum&quot;:&quot;2&quot;,&quot;grader1&quot;:&quot;0x...&quot;,&quot;recoveryTime&quot;:...} )</tspan></text>
+         style="stroke-width:0.11009839">keccak( {&quot;sport&quot;:&quot;NFL&quot;,&quot;team1&quot;:&quot;Green Bay&quot;,&quot;team2&quot;:&quot;New England&quot;,</tspan><tspan
+         sodipodi:role="line"
+         x="44.070271"
+         y="105.77009"
+         style="stroke-width:0.11009839"
+         id="tspan931">               &quot;graderQuorum&quot;:&quot;2&quot;,&quot;graders&quot;:[&quot;0x...&quot;],&quot;recoveryTime&quot;:...} )</tspan></text>
   </g>
 </svg>

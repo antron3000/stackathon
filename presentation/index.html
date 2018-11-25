@@ -57,34 +57,29 @@
 
 <section data-markdown><script type="text/template">
 
-# Hello
+# Scalable Betting Solution
 
-Doug Hoyte
+Doug Hoyte and Antoine De Vuyst
 
 </script></section>
 
 
 <section data-markdown><script type="text/template">
 
-# How it works now
+# SportCrypt.com
 
-<pre class="javascript" style="font-size: 50%">
-contract SportCrypt {
-    mapping(address => bool) private admins;
+* Fixed-odds peer-to-peer sports betting exchange
+* Soccer, NFL, NBA, hockey, college games, and more
+* Been live on mainnet since October 2017
 
-    function claim(uint matchId, uint8 finalPrice, bytes32 r, bytes32 s, uint8 v)
-               external {
-        uint messageHash = uint(keccak256(this, matchId, finalPrice));
-        address signer = ecrecover(keccak256("\x19Ethereum Signed Message:\n32",
-                                             messageHash),
-                                   v, r, s);
+</script></section>
 
-        require(admins[signer]);
 
-        // ...
-    }
-}
-</pre>
+<section data-markdown><script type="text/template">
+
+# Growth
+
+<img src="sc-stats.png">
 
 </script></section>
 
@@ -92,20 +87,48 @@ contract SportCrypt {
 
 <section data-markdown><script type="text/template">
 
-# Calculate matchId
+# Our Hack
+
+* Make "counterfactual instance" of bet agreement between bettors (off-chain)
+* All agreement details are embedded in specially encoded matchId
+* Relevant details accessible to contract via merkle tree encoding
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+# matchId encoding
 
 <img style="background-color: white; padding: 10px" src="matchId.svg">
 
 </script></section>
 
 
+<section data-markdown><script type="text/template">
+
+# Settlement methods
+
+    function claim(bytes32 witness,
+                   uint256 graderQuorum,
+                   address[] memory graders,
+                   uint8 finalPrice,
+                   bytes32[3][] memory sigs)
+
+    function recoverFunds(uint256 graderQuorum,
+                          address[] memory graders,
+                          bytes32 detailsHash,
+                          uint recoveryTime,
+                          uint8 cancelPrice)
+
+</script></section>
+
+
 
 <section data-markdown><script type="text/template">
 
-# Thank you
-
-This presentation:<br/>
-[https://hoytech.github.io/presentations/stackathon/](https://hoytech.github.io/presentations/stackathon/)
+# Demo
 
 </script></section>
 

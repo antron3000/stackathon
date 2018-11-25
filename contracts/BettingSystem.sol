@@ -3,7 +3,12 @@ pragma experimental ABIEncoderV2;
 
 
 contract BettingSystem {
+    mapping(bytes32 => mapping(address => uint)) positions;
     mapping(bytes32 => bool) claimed;
+
+    function bet(bytes32 matchId) payable public {
+        positions[matchId][msg.sender] = msg.value;
+    }
 
     function claim(bytes32 witness, uint256 graderQuorum, address[] memory graders, uint8 finalPrice, bytes32[][3] memory sigs) public {
         require(finalPrice <= 100);
@@ -24,6 +29,11 @@ contract BettingSystem {
 
         require(validated >= graderQuorum, "insufficient graders for quorum");
 
-        claimed[matchId] = true;
+        uint toWithdraw = positions[matchId][msg.sender];
+        positions[matchId][msg.sender] = 0;
+        msg.sender.transfer(toWithdraw);
     }
+
+    //function recoverFunds(bytes32 witness, uint256 graderQuorum, address[] memory graders, bytes32 detailsHash, uint recoveryTime, uint8 cancelPrice) public {
+    //}
 }
